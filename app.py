@@ -10,9 +10,9 @@ load_dotenv();
 email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
 botauth = os.getenv("BOTAUTH")
+timeSkip = time.sleep(5)
 
 browser = webdriver.Firefox(executable_path=r'C:\Users\Burak\Desktop\geckodriver\geckodriver.exe')
-
 
 quotesList = ['“You are never too old to set another goal or to dream a new dream.”\n— Malala Yousafzai',
               '“You define your own life. Don’t let other people write your script.\n”— Oprah Winfrey',
@@ -36,71 +36,91 @@ tagName = "#InspirationalQuotes"
 
 browser.get("https://twitter.com/i/flow/login")
 
-time.sleep(5)
 
-
-#Email Input Login Section Start
-
-emailInput = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[5]/label/div/div[2]/div/input")
-
-emailInput.send_keys(email)
-
-emailNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[6]");
-
-emailNextButton.click()
-
-time.sleep(5)
-
-
-#Email Input Login Section End
-
-#Bot Auth Section Start
-
-botInput = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/label/div/div[2]/div/input")
-
-if(botInput):
+def emailLogin(email):
     
-    botInput.send_keys(botauth)
-
-    botNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div")
-
-    botNextButton.click()
-
-time.sleep(5)
-
-#Bot Auth Section End
-
-#Password Input Login Section Start
-
-passwordInput  = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[3]/div/label/div/div[2]/div[1]/input")
-
-passwordInput.send_keys(password)
-
-passwordNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]")
-
-passwordNextButton.click()
-
-time.sleep(5)
-
-#Password Input Login Section End
-
-#Auto Tweeting Section Start
-
-tweetSection = browser.find_element_by_xpath("/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div")
-
-time.sleep(5)
-
-
-while True:
-    
-    tweetSection = browser.find_element_by_xpath("/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div")
-    
-    quote = random.choice(quotesList) + "\nQuoteNumber : " + str(random.randint(0,sys.maxsize)) +"\n"+tagName
-    
-    tweetSection.send_keys(quote)
-    
-    tweetSection.send_keys(Keys.CONTROL + Keys.ENTER)
-    
+    #Email Input Login Section Start
     time.sleep(5)
 
-#Auto Tweeting Section End
+    emailInput = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[5]/label/div/div[2]/div/input")
+
+    emailInput.send_keys(email)
+
+    emailNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[6]");
+
+    emailNextButton.click()
+
+    time.sleep(5)
+
+
+    #Email Input Login Section End
+
+    
+
+
+def botAuth(botauth):
+    #Bot Auth Section Start
+
+    botInput = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[2]/label/div/div[2]/div/input")
+
+    if(botInput):
+    
+        botInput.send_keys(botauth)
+
+        botNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div")
+
+        botNextButton.click()
+
+        time.sleep(5)
+
+        #Bot Auth Section End
+        
+        
+
+def passwordLogin(password):
+    
+    #Password Input Login Section Start
+    passwordInput  = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div[3]/div/label/div/div[2]/div[1]/input")
+
+    passwordInput.send_keys(password)
+
+    passwordNextButton = browser.find_element_by_xpath("/html/body/div/div/div/div[1]/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]")
+
+    passwordNextButton.click()
+
+    time.sleep(5)
+    #Password Input Login Section End
+
+
+def autoTweeting():
+    
+    #Auto Tweeting Section Start
+
+    tweetSection = browser.find_element_by_xpath("/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div")
+
+    time.sleep(5)
+
+    while True:
+    
+        tweetSection = browser.find_element_by_xpath("/html/body/div[1]/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div")
+    
+        quote = random.choice(quotesList) + "\nQuoteNumber : " + str(random.randint(0,sys.maxsize)) +"\n"+tagName
+    
+        tweetSection.send_keys(quote)
+    
+        tweetSection.send_keys(Keys.CONTROL + Keys.ENTER)
+    
+        time.sleep(5)
+
+        #Auto Tweeting Section End
+
+
+emailLogin(email)
+botAuth(botauth)
+passwordLogin(password)
+autoTweeting()
+
+
+
+
+
